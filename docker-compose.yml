@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: shortx-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: shortx
+      POSTGRES_PASSWORD: shortx_dev_password
+      POSTGRES_DB: shortx
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

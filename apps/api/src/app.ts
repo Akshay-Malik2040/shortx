@@ -1,4 +1,5 @@
 import express from "express";
+import { pool } from "./db";
 
 const app = express();
 
@@ -9,6 +10,25 @@ app.get("/health", (_req, res) => {
     status: "ok",
     service: "shortx-api"
   });
+});
+
+app.get("/health/db", async (_req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+
+    res.json({
+      status: "ok",
+      database: "connected",
+      time: result.rows[0].now
+    });
+  } catch (error) {
+    console.error("Database connection failed:", error);
+
+    res.status(500).json({
+      status: "error",
+      database: "disconnected"
+    });
+  }
 });
 
 export default app;
