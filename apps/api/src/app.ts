@@ -1,5 +1,6 @@
 import express from "express";
 import { pool } from "./db";
+import urlRoutes from "./routes/url.routes";
 
 const app = express();
 
@@ -30,5 +31,7 @@ app.get("/health/db", async (_req, res) => {
     });
   }
 });
+
+app.use("/api/v1/urls", urlRoutes);
 
 export default app;
